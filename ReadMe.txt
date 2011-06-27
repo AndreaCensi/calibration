@@ -1,4 +1,4 @@
-Supplemental material for "Simultaneous calibration of odometry and sensor parameters for mobile robots"
+Supplemental materials for "Simultaneous calibration of odometry and sensor parameters for mobile robots"
 ==========================================================================
 
 This archive contains C++ source code for the calibration method described 
@@ -78,9 +78,12 @@ For each configuration X:
 Installation instructions
 ---------------------------------------------------------------------------
 
-The installation process has been tried on Mac OS X (10.5-10.6) and various versions of Ubuntu. With perhaps a few modifications, the software should run on all flavors of Unix.
+The installation process has been tried on Mac OS X (10.5-10.6) and various
+versions of Ubuntu. With perhaps a few modifications, the software should run
+on all flavors of Unix.
 
-The first step is installing CSM. Please see the instructions at the website <http://purl.org/censi/2007/csm>.
+The first step is installing CSM. Please see the instructions at the website
+<http://purl.org/censi/2007/csm>.
 
 The minimal steps are as follows:
 
@@ -90,11 +93,13 @@ The minimal steps are as follows:
     $ make 
     $ make install
     
-Remember to point ``PKG_CONFIG_PATH`` where you installed CSM. In the default case, this is ``/usr/local``:
+Remember to point ``PKG_CONFIG_PATH`` where you installed CSM. In the default
+case, this is ``/usr/local``:
 
     export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/:$PKG_CONFIG_PATH
     
-Compiling the calibration software does not require more dependencies than CSM itself (e.g., GSL). 
+Compiling the calibration software does not require more dependencies than 
+CSM itself (e.g., GSL). 
 
 The installation is simple:
 
@@ -106,7 +111,8 @@ The installation is simple:
 Execution instructions
 ---------------------------------------------------------------------------
 
-In the directory ``scripts/`` there is a file ``run_all.sh`` that does the complete calibration process from the logged data.
+In the directory ``scripts/`` there is a file ``run_all.sh`` that does 
+the complete calibration process from the logged data.
 
     $ cd logs/
     $ ./run_all.sh
@@ -161,9 +167,12 @@ where:
 
 ### Tuples files format 
 
-The *tuples files* are the result of running scan matching, and synchronization of scan matching and odometry data.  
+The *tuples files* are the result of running scan matching, and 
+synchronization of scan matching and odometry data.  
 
-The field ``T`` is the interval; the fields ``phi_r`` and ``phi_r`` are the average wheel velocities, and ``sm`` is the scan matching estimate.
+The field ``T`` is the interval; the fields ``phi_r`` and 
+``phi_r`` are the average wheel velocities, and ``sm`` is 
+the scan matching estimate.
 
     
 
@@ -179,7 +188,8 @@ The field ``T`` is the interval; the fields ``phi_r`` and ``phi_r`` are the aver
 body { font-family: Georgia, Verdana, sans-serif;}
 body { padding-left: 2em;}
 body p, body ul { max-width: 35em;}
-pre { margin-left: 2em; background-color: #bbf; border: solid 1px black;
+pre { margin-left: 2em; background-color: #bbf;
+     border: solid 1px black;
 	padding: 10px;}
 	
 code { padding: 3px; color: #008; font-size: 70%;}
