@@ -1,0 +1,13 @@
+This archive contains C++ source code for the calibration method described 
+in the paper, plus the raw data and scripts to reproduce the experiments.
+
+Please contact Andrea Censi <andrea@cds.caltech.edu> for any concern 
+regarding installation and usage of this package.
+
+An up-to-date version of this package can be found at the website:
+
+  http://purl.org/censi/2011/calibration
+  
+
+
+
