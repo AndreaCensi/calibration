@@ -17,16 +17,16 @@ src/:
                     the tuple files.
     * solver:Given the tuple files, solves for the calibration parameters
     
-logs/:
+scripts/:
 
     This directory contains the data files and the scripts for running 
     the experiments and visualizing the data.
 
-    logs/run_all.sh:  Runs the calibration procedure.
-    logs/script_variables.sh: This file contains the environment variables,
+    scripts/run_all.sh:  Runs the calibration procedure.
+    scripts/script_variables.sh: This file contains the environment variables,
         executable paths, and parameters common to all the scripts. 
 
-logs/raw_logs/:
+data/:
 
     This directory contains the raw data logs. The raw logs are called
     "lstraight", "l90", "lmov" (corresponding to the configurations A,B,C 
@@ -87,7 +87,7 @@ The installation is simple:
 Execution instructions
 ----------------------
 
-In the directory "logs/" there is a file "run_all.sh" that does the complete calibration process from the logged data.
+In the directory "scripts/" there is a file "run_all.sh" that does the complete calibration process from the logged data.
 
     $ cd logs/
     $ ./run_all.sh
@@ -97,7 +97,7 @@ errors displayed; that is just bad data (synchronization issues between
 odometry and laser.)
 
 
-Execution instructions
+Data formats
 ----------------------
 
     
