@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC
+    "-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN"
+    "http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd">
+<html xmlns:svg='http://www.w3.org/2000/svg' xml:lang='en' xmlns='http://www.w3.org/1999/xhtml'>
+<head><meta content='application/xhtml+xml;charset=utf-8' http-equiv='Content-type' /><title>Supplemental material for Simultaneous calibration of odometry and sensor parameters for mobile robots</title></head>
+<body>
+<h1 id='supplemental_material_for_simultaneous_calibration_of_odometry_and_sensor_parameters_for_mobile_robots'>Supplemental material for &#8220;Simultaneous calibration of odometry and sensor parameters for mobile robots&#8221;</h1>
+
+<p>This archive contains C++ source code for the calibration method described in the paper, plus the raw data and scripts to reproduce the experiments, in the spirit of <a href='http://reproducibleresearch.net/'>reproducible research</a>.</p>
+
+<p>Please contact Andrea Censi (andrea at cds.caltech.edu) for any concern regarding installation and usage of this package.</p>
+
+<p>An up-to-date version of this package can be found at the website:</p>
+
+<p><a href='http://purl.org/censi/2011/calibration'>http://purl.org/censi/2011/calibration</a></p>
+
+<h2 id='package_contents'>Package contents</h2>
+
+<p>The following is an overview of the contents.</p>
+
+<h3 id='directory_'>Directory <code>src/</code></h3>
+
+<p>This directory contains the C++ source files for implementing the method.</p>
+
+<p>The main executables created are:</p>
+
+<ul>
+<li>
+<p><code>synchronizer</code>: Synchronizes laser data and odometry to obtain the tuple files (input to the algorithm).</p>
+</li>
+
+<li>
+<p><code>solver</code>: Given the tuple files, solves for the calibration parameters. This is the &#8220;meat&#8221; of the method.</p>
+</li>
+</ul>
+
+<h3 id='directory_'>Directory <code>scripts/</code></h3>
+
+<p>This directory contains the data files and the scripts for running the experiments and visualizing the data.</p>
+
+<p>The main scripts are:</p>
+
+<ul>
+<li><code>scripts/run_all.sh</code>: Runs the complete calibration procedure.</li>
+
+<li><code>scripts/script_variables.sh</code>: This file contains the environment variables, executable paths, and parameters common to all the scripts.</li>
+</ul>
+
+<h3 id='directory_'>Directory <code>data/</code></h3>
+
+<p>This directory contains the raw data logs. The raw logs are called <code>lstraight</code>, <code>l90</code>, <code>lmov</code>; these correspond to the configurations A,B,C in the paper.</p>
+
+<p>Inside each <code>.tar.gz</code>, there are multiple experiments. See below for a description of the data format.</p>
+
+<h3 id='directory_'>Directory <code>reference-output/</code></h3>
+
+<p>This directory contains the output of the synchronization procedure and the results of calibration, as well as the intermediate results (in case one is not able to run the scan matching software).</p>
+
+<p>The intermediate result of the method is the creation of &#8220;tuple files&#8221;: the odometry and scan matching data is integrated to obtain a series of tuples, each containing average wheel velocities and scan matching result for the interval.</p>
+
+<p>For each configuration X:</p>
+
+<ul>
+<li><code>X.tuple</code> are the complete tuples</li>
+
+<li><code>X_i.tuple</code> are the tuples for the i-th subset</li>
+
+<li><code>X_results.json</code> are the calibration results in JSON</li>
+
+<li><code>X_results.m</code> &#8230; and in Matlab format</li>
+</ul>
+
+<h2 id='installation_instructions'>Installation instructions</h2>
+
+<p>The installation process has been tried on Mac OS X (10.5-10.6) and various versions of Ubuntu. With perhaps a few modifications, the software should run on all flavors of Unix.</p>
+
+<p>The first step is installing CSM. Please see the instructions at the website <a href='http://purl.org/censi/2007/csm'>http://purl.org/censi/2007/csm</a>.</p>
+
+<p>The minimal steps are as follows:</p>
+
+<pre><code>$ git clone git://github.com/AndreaCensi/csm.git
+$ cd csm
+$ cmake .
+$ make 
+$ make install</code></pre>
+
+<p>Remember to point <code>PKG_CONFIG_PATH</code> where you installed CSM. In the default case, this is <code>/usr/local</code>:</p>
+
+<pre><code>export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig/:$PKG_CONFIG_PATH</code></pre>
+
+<p>Compiling the calibration software does not require more dependencies than CSM itself (e.g., GSL).</p>
+
+<p>The installation is simple:</p>
+
+<pre><code>$ cd src/
+$ cmake .
+$ make install</code></pre>
+
+<h2 id='execution_instructions'>Execution instructions</h2>
+
+<p>In the directory <code>scripts/</code> there is a file <code>run_all.sh</code> that does the complete calibration process from the logged data.</p>
+
+<pre><code>$ cd logs/
+$ ./run_all.sh</code></pre>
+
+<p>Note that it might take some time. It is normal to see a few scan matching errors displayed; that is just bad data (synchronization issues between odometry and laser.)</p>
+
+<p>The script <code>create_tuples.sh</code> is called by <code>run_all.sh</code> and is the one responsible for processing the data with the scan matcher and running the synchronization between scan matching and odometry. It creates &#8220;tuple files&#8221; which correspond to a series of what in the paper are called &#8220;samples&#8221;. Basically, the tuples correspond to the input of the algorithm.</p>
+
+<p>Note that the <code>reference-output/</code> directory contains the generated tuple files, so that the results can be reproduced even if the scan matcher cannot be installed.</p>
+
+<h2 id='data_formats'>Data formats</h2>
+
+<p>These are a few notes about the data formats used.</p>
+
+<p>All logs and intermediate results are in the JSON format. See the website <a href='http://www.json.org/'>http://www.json.org/</a> for more information (including libraries for reading the format easily for many different languages).</p>
+
+<h3 id='raw_log_files_format'>Raw log files format</h3>
+
+<p>The raw log files have this format:</p>
+
+<pre><code>{  &quot;timestamp&quot;: [949, 943101], 
+   &quot;readings&quot;: [ ...],  
+   &quot;theta&quot;: [ ... ], 
+   &quot;right&quot;: 0, 
+   &quot;left&quot;: 0, 
+   &quot;leftTimestamp&quot;: [ 949, 940807], 
+   &quot;rightTimestamp&quot;: [ 949, 942685] }</code></pre>
+
+<p>where:</p>
+
+<ul>
+<li><code>readings</code> is the array of range-finder readings.</li>
+
+<li><code>theta</code> is the direction of each reading.</li>
+
+<li><code>left</code> and <code>right</code> are the encoder readings, in ticks.</li>
+
+<li><code>timestamp</code> is a two-shorts UNIX timestamp of when the laser data was taken;</li>
+
+<li><code>leftTimestamp</code>, <code>rightTimestamp</code> are the timestamps for when the the encoder data was taken.</li>
+</ul>
+
+<p>(there are also other fields, not relevant for calibration)</p>
+
+<h3 id='tuples_files_format'>Tuples files format</h3>
+
+<p>The <em>tuples files</em> are the result of running scan matching, and synchronization of scan matching and odometry data.</p>
+
+<p>The field <code>T</code> is the interval; the fields <code>phi_r</code> and <code>phi_r</code> are the average wheel velocities, and <code>sm</code> is the scan matching estimate.</p>
+<!-- Ignore this, it makes the HTML look nice --><style>
+body { font-family: Georgia, Verdana, sans-serif;}
+body { padding-left: 2em;}
+body p, body ul { max-width: 35em;}
+pre { margin-left: 2em; background-color: #bbf; border: solid 1px black;
+	padding: 10px;}
+	
+code { padding: 3px; color: #008; font-size: 70%;}
+/*pre code { background-color: #bbf;}
+code { background-color: #ddf; }*/
+p, pre { max-width: 40em; }
+
+pre code { font-weight: normal; }
+code { font-weight: bold; }
+
+h1 { }
+h2 { 
+	
+	
+	border-bottom: solid 2px #b00; 
+	margin-top: 2em;
+	max-width: 35em;
+	padding: 0.1em; margin-left: -1em;}
+	
+h3 { border-bottom: solid 2px #00b; 
+    	max-width: 35em;}
+</style></body></html>
