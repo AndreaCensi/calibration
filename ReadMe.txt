@@ -50,8 +50,8 @@ reference-output/:
     velocities and scan matching result for the interval.
     
     For each configuration X:
-        "X.tuple"        are the original tuples
-        "X_i.tuple"      are the tuples at the i-th iteration
+        "X.tuple"        are the complete tuples
+        "X_i.tuple"      are the tuples for the i-th subset
         "X_results.json" are the calibration results in JSON
         "X_results.m"    ... and in Matlab format
 
@@ -98,7 +98,12 @@ odometry and laser.)
 
 
 Data formats
-----------------------
+------------
+
+These are a few notes about the data formats used.
+
+
+*Tuples files* are in the JSON format. The field ``T`` is the interval; the fields ``phi_r`` and ``phi_r`` are the average wheel velocities, and ``sm`` is the scan matching estimate.
 
     
     
