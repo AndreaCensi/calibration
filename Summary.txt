@@ -1,5 +1,6 @@
 This archive contains C++ source code for the calibration method described 
-in the paper, plus the raw data and scripts to reproduce the experiments.
+in the paper, plus the raw data and scripts to reproduce the experiments,
+in the spirit of "Reproducible Research".
 
 Please contact Andrea Censi <andrea@cds.caltech.edu> for any concern 
 regarding installation and usage of this package.
