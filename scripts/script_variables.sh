@@ -18,7 +18,7 @@ sets="l90 lmov lstraight"
 decimate_period=4
 sm_options="-restart 0 -recover_from_error 1 -max_iterations 1000 -min_reading 0.3 -max_angular_correction_deg 10 -max_linear_correction 0.05 -epsilon_xy 0.000001 -epsilon_theta 0.000001 "
 synchronizer_options="-tk_threshold 5  -perc_threshold 0.95 -time_tolerance 0.5"
-solver_options="-mode 0  -outliers_iterations 4"
+solver_options="-mode 0  -outliers_iterations 8 -outliers_percentage 0.005"
 
 
 check_exec() {

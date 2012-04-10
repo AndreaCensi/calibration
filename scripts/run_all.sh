@@ -44,7 +44,6 @@ rm -rf ${tuple_dir}/*.tuple
 mkdir -p ${tuple_dir}/
  
 for set in ${sets}; do
-    
     wd=${working_dir}/${set}
     cat ${wd}/exp*/*.log_tuple > ${tuple_dir}/${set}.tuple
      ${json_decimate} -period 3 -phase 0 -in ${tuple_dir}/${set}.tuple -out ${tuple_dir}/${set}_0.tuple
@@ -56,7 +55,9 @@ echo "$0: Now solving for all tuples"
 
 for file in ${tuple_dir}/*.tuple; do
     a=`basename ${file} .tuple`
-    ${solver} -input_file ${tuple_dir}/${a}.tuple -output_file ${tuple_dir}/${a}_results.json ${solver_options} 
+    ${solver} -input_file ${tuple_dir}/${a}.tuple -output_file ${tuple_dir}/${a}_results.json ${solver_options}  
+
+
     ${json2matlab}  ${tuple_dir}/${a}_results.json
 done
 
