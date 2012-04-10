@@ -20,10 +20,12 @@ end
 % compute Jij as params 7-10
 
 for i=1:numel(res)
-	res{i}.x = [res{i}.l_diam res{i}.r_diam res{i}.axle res{i}.l_x res{i}.l_y res{i}.l_theta];
+	% Original: res{i}.x = [res{i}.l_diam res{i}.r_diam res{i}.axle res{i}.l_x res{i}.l_y res{i}.l_theta];
+	res{i}.x = [res{i}.l_diam/2 res{i}.r_diam/2 res{i}.axle res{i}.l_x res{i}.l_y res{i}.l_theta];
 
 	% J11 = r_l /2
-	res{i}.x(7) = res{i}.x(1) / 4;
+	% Original: res{i}.x(7) = res{i}.x(1) / 4;
+	res{i}.x(7) = res{i}.x(1) / 2;
 
 	df_dx = [1/4 0 0 0	0 0 ];
 	res{i}.covariance(1:6,7) =	res{i}.covariance(1:6,1:6) *  df_dx';
@@ -31,13 +33,13 @@ for i=1:numel(res)
 	res{i}.covariance(7,7) = df_dx * res{i}.covariance(1:6,1:6) * df_dx';
 	
 	% J12
-	res{i}.x(8) = res{i}.x(2) / 4;
+	% Original: res{i}.x(8) = res{i}.x(2) / 4;
+	res{i}.x(8) = res{i}.x(2) / 2;
 
 	df_dx = [0 1/4 0 0 0  0 0];
 	res{i}.covariance(1:7,8) =	res{i}.covariance(1:7,1:7) *  df_dx';
 	res{i}.covariance(8,1:7) =	res{i}.covariance(1:7,8)';
 	res{i}.covariance(8,8) = df_dx * res{i}.covariance(1:7,1:7) * df_dx';
-
 
 
 	% J21
@@ -88,6 +90,7 @@ nr=3;nc=4;
 titles = { 'r_L','r_R','b','l_x','l_y','l_\theta','J11','J12','J21','J22'};
 simpletitlestex = { 'r_L','r_R','b','l_x','l_y','l_\theta','J_{11}','J_{12}','J_{21}','J_{22}'};
 titlestex = { 'r_{\mathrm{L}}','r_{\mathrm{R}}','b','\ell_x','\ell_y','\ell_\theta','J_{11}','J_{12}','J_{21}','J_{22}'};
+
 titlestexstr = {}; for i=1:numel(titlestex); titlestexstr{i} = sprintf('$\\rule{0pt}{4mm}%s\\rule{2mm}{0pt}$', titlestex{i}); end
 
 scales = { 1000, 1000, 1000, 1000, 1000, 180/pi, 1000, 1000, 180/pi, 180/pi};
@@ -104,6 +107,12 @@ for v=1:10
 
 	for i=1:numel(res)
 		val = res{i}.x(v) ;
+
+		% if (i == 1) | (i==2) 
+		% 	% quick fix for radius/diameter problem
+		% 	val = val / 2;
+		% end
+
 		sigma = sqrt( res{i}.covariance(v,v) );
 		errorbar(i, scales{v}*val, scales{v}* 3*sigma);
 	end
@@ -310,7 +319,7 @@ for i=1:numel(res)
 	iterations = dir(sprintf('%s/%s_results_iter*.asc', tuple_dir, res{i}.basename));
 	for a=1:numel(iterations)
 		file = sprintf('%s/%s',tuple_dir,iterations(a).name);
-		[pathstr, basename, ext, versn] = fileparts(file);
+		[pathstr, basename, ext] = fileparts(file);
 		prefix = sprintf('%s/%s',tuple_dir, basename);
 
 		create_pictures_iteration(file,prefix);

@@ -2,7 +2,7 @@ function create_pictures_iteration(iteration_file, prefix)
 
 
 if exist(sprintf('%s_sm.eps', prefix))
-    fprintf('Already did  %s -- remove files if you want to do it again\n', prefix)
+    fprintf('Already did  %s -- remove files if you want to do it again\n', prefix);
     return
 end
 
