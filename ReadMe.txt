@@ -105,7 +105,7 @@ The installation is simple:
 
     $ cd src/
     $ cmake .
-    $ make install
+    $ make
      
 
 Execution instructions
